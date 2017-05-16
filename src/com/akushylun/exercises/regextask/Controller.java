@@ -6,10 +6,13 @@ import java.util.regex.Pattern;
 public class Controller {
 	
 	Pattern emailPattern = Pattern.compile("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$");
+	
 	Pattern nameInfoPattern = Pattern.compile("[A-Za-z]+");
-	Pattern phonePattern = Pattern.compile("^\\+\\[0-9]{2}\\(\\[0-9]{3}\\)\\[0-9]{3}-\\[0-9]{2}-\\[0-9]{2}$");
+	
+	Pattern phonePattern = Pattern.compile("^\\+\\d{2}\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2}$");
 	
 	Record record;
+	
 	View view;
 	
 	public Controller(Record record, View view) {
@@ -40,11 +43,12 @@ public class Controller {
 	}
 	
 	private String checkInput(Scanner sc, Pattern pattern) {
-		while (!sc.hasNext(pattern)) {
-			view.printMessage(View.WRONG_INPUT_DATA);
-			sc.next();
+		String s = sc.next();
+		if (pattern.matcher(s).matches() == false) {
+			view.printMessage(View.WRONG_INPUT_DATA + s + " " + pattern);
+			checkInput(sc, pattern);
 		}
-		return sc.next();
+		return s;
 	}
 	
 }
