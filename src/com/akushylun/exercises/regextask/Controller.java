@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Controller {
 	
-	Model model;
-	View view;
+	private Model model;
+	private View view;
 	
 	public Controller(Model model, View view) {
 		this.model = model;
