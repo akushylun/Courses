@@ -8,15 +8,27 @@ import java.util.List;
 public class Record {
 	
 	private String name;
+	
 	private String nickname;
+	
 	private String comment;
+	
 	private Group group;
+	
+	private Address address;
+	
 	private String telHome;
+	
 	private String telMobile;
+	
 	private String email;
+	
 	private String skype;
+	
 	private String telMobileOptional;
+	
 	private Date dateOfCreation;
+	
 	private List<Date> dateOfLastChange = new ArrayList<Date>();
 	
 	public void setName(String surname, String name, String patronymic) {
@@ -33,6 +45,10 @@ public class Record {
 	
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+	
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 	public void setTelHome(String telHome) {
@@ -64,19 +80,6 @@ public class Record {
 		dateOfLastChange.add(cal.getTime());
 	}
 	
-	public void setFullAdress(String index, String city, String street, String building, String room) {
-		Address address = new Address();
-		address.setFullAddress(index, city, street, building, room);
-	}
-	
-	private class Address {
-		private String fullAddress;
-		private void setFullAddress(String index, String city, String street, String building, String room) {
-			this.fullAddress = index + " " + city + " " + street + " " + building + " " + room;
-		}
-		
-	}
-	
 	@Override
 	public String toString() {
 		return "Record [name=" + name + ", nickname=" + nickname + ", comment=" + comment + ", group=" + group + ", telHome="
@@ -84,5 +87,4 @@ public class Record {
 		        + telMobileOptional + ", dateOfCreation=" + dateOfCreation + ", dateOfLastChange=" + dateOfLastChange + "]";
 	}
 	
-
 }

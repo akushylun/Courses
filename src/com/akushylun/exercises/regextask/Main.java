@@ -3,11 +3,9 @@ package com.akushylun.exercises.regextask;
 public class Main {
 	
 	public static void main(String[] args) {
-		Notebook notebook = new Notebook();
-		Record record = new Record();
+		Model model = new Model();
 		View view = new View();
-		Controller controller = new Controller(notebook, record, view);
-		
+		Controller controller = new Controller(model, view);
 		controller.processUser();
 	}
 	
