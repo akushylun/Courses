@@ -34,7 +34,6 @@ public class StudentMathematick extends Student implements Runnable {
 					handler.addStudent(new StudentMathematick());
 					handler.wait();
 				}
-				
 				catch (InterruptedException e) {
 					e.printStackTrace();
 				}
