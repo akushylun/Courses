@@ -14,7 +14,15 @@ public class Controller {
 	
 	public void processUser() {
 		Scanner sc = new Scanner(System.in);
-		while(!model.checkInputValuesWithScanner(sc)){};
+		try {
+			Record record = model.checkInputValuesWithScanner(sc);
+			model.addRecord(record);
+		}
+		catch (NicknameException ex) {
+			view.printMessage(ex.toString());
+			model.changeNickname(sc);
+		}
+		System.out.println(model.toString());
 		view.printMessage(View.SUCCESSFUL_ADDED_RECORD);
 	}
 }

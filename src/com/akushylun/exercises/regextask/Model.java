@@ -14,22 +14,23 @@ public class Model {
 	private static final Pattern OTHER_PATTERN = Pattern.compile("[A-Za-z]+");
 	
 	private Notebook notebook;
+	private Record record;
 	
 	public Model() {
 		this.notebook = new Notebook();
+		this.record = new Record();
+		
 	}
 	
 	/**
 	 * Method are used for simple adding a {@code Record} without Pattern checking
-	 * 
 	 * @param record
 	 */
-	public void addRecordWithoutPatternChecking(Record record) {
+	public void addRecord(Record record) {
 		notebook.addRecord(record);
 	}
 	
-	public boolean checkInputValuesWithScanner(Scanner sc) {
-		Record record = new Record();
+	public Record checkInputValuesWithScanner(Scanner sc) {
 		record.setName(checkValueWithPattern(sc, OTHER_PATTERN), checkValueWithPattern(sc, OTHER_PATTERN),
 		    checkValueWithPattern(sc, OTHER_PATTERN));
 		record.setNickname(checkValueWithPattern(sc, OTHER_PATTERN));
@@ -43,13 +44,12 @@ public class Model {
 		        checkValueWithPattern(sc, OTHER_PATTERN), checkValueWithPattern(sc, OTHER_PATTERN),
 		        checkValueWithPattern(sc, OTHER_PATTERN)));
 		record.setDateOfCreation(Calendar.getInstance().getTime());
-		try {
-			notebook.addRecord(record);
-		}
-		catch (NicknameException ex) {
-			System.out.println(ex);
-		}
-		return true;
+		return record;
+	}
+	
+	public void changeNickname(Scanner sc) {
+		record.setNickname(checkValueWithPattern(sc, OTHER_PATTERN));
+		notebook.addRecord(record);
 	}
 	
 	private String checkValueWithPattern(Scanner sc, Pattern pattern) {
@@ -73,5 +73,11 @@ public class Model {
 			default:
 				return Group.OTHER;
 		}
+		
+	}
+	
+	@Override
+	public String toString() {
+		return "Model [notebook=" + notebook + ", record=" + record + "]";
 	}
 }

@@ -16,7 +16,7 @@ public class Notebook {
 		records.add(record);
 	}
 	
-	private boolean nicknameIsEmpty(Record comparedRecord) throws NicknameException {
+	private boolean nicknameIsEmpty(Record comparedRecord) {
 		for (Record record : records) {
 			if (record.getNickname().equals(comparedRecord.getNickname())) {
 				throw new NicknameException("Please change your login!");

@@ -11,7 +11,7 @@ public class Main {
 		        "akushylun@gmail.com", "skype", Calendar.getInstance().getTime());
 		
 		Model model = new Model();
-		model.addRecordWithoutPatternChecking(record);
+		model.addRecord(record);
 		View view = new View();
 		Controller controller = new Controller(model, view);
 		controller.processUser();
