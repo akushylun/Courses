@@ -23,12 +23,7 @@ public class UniversityMath extends University {
 					handler.removeStudent();
 				}
 				handler.notify();
-				try {
-					Thread.sleep(70);
-				}
-				catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				
 			}
 		}
 	}

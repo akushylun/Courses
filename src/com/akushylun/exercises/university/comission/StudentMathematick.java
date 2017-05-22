@@ -12,7 +12,6 @@ public class StudentMathematick extends Student {
 	@Override
 	public void run() {
 		synchronized (handler) {
-			System.out.println("student math CLASS");
 			while (amountOfStudents > 0) {
 				while (handler.getSize() > 25) {
 					try {
@@ -26,12 +25,6 @@ public class StudentMathematick extends Student {
 				handler.addStudent(new StudentMathematick());
 				amountOfStudents = amountOfStudents - 1;
 				handler.notify();
-				try {
-					Thread.sleep(50);
-				}
-				catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 		}
 	}
