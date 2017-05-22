@@ -1,27 +1,32 @@
 package com.akushylun.exercises.university.comission;
 
-public class UniversityBiol implements University, Runnable {
+public class UniversityBiol extends University {
 	
-	private QueueToAdd handler;
-	
-	private volatile boolean flag = true;
-	
-	public UniversityBiol(QueueToAdd handler) {
-		this.handler = handler;
-	}
-	
-	public boolean stopThread() {
-		flag = false;
-		return flag;
+	public UniversityBiol(QueueProduceConsume handler, Student student) {
+		super(handler, student);
 	}
 	
 	@Override
 	public void run() {
-		while (flag != false) {
-			synchronized (handler) {
-				while (handler.getSize() != 0) {
-					System.out.println("remove student " + handler.getSize());
-					handler.removeStudent();
+		synchronized (handler) {
+			while (student.amountOfStudents > 0) {
+				while (student.amountOfStudents > 0 && handler.getSize() == 0
+				        || handler.getStudent().getClass() != student.getClass()) {
+					try {
+						handler.wait();
+					}
+					catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println("consume biol student ");
+				handler.removeStudent();
+				handler.notify();
+				try {
+					Thread.sleep(50);
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}

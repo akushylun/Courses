@@ -1,40 +1,34 @@
 package com.akushylun.exercises.university.comission;
 
-public class StudentBiologist extends Student implements Runnable {
-	
-	private QueueToAdd handler;
-	
-	private volatile boolean flag = true;
-	
-	private int amountOfStudents = 200;
+public class StudentBiologist extends Student {
 	
 	public StudentBiologist() {
 	}
 	
-	public StudentBiologist(QueueToAdd handler) {
-		this.handler = handler;
-	}
-	
-	public boolean isNotEmptyList() {
-		if (amountOfStudents > 1) {
-			amountOfStudents = amountOfStudents - 1;
-			flag = true;
-		} else
-			flag = false;
-		return flag;
+	public StudentBiologist(QueueProduceConsume handler, int amountOfStudents) {
+		super(handler, amountOfStudents);
 	}
 	
 	@Override
 	public void run() {
-		
-		while (isNotEmptyList() != false) {
-			synchronized (handler) {
-				try {
-					System.out.println("biol " + amountOfStudents);
-					handler.addStudent(new StudentBiologist());
-					handler.wait();
+		synchronized (handler) {
+			System.out.println("student biol CLASS");
+			while (amountOfStudents > 1) {
+				while (handler.getSize() > 25) {
+					try {
+						handler.wait();
+					}
+					catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-				
+				System.out.println("biology student " + amountOfStudents);
+				handler.addStudent(new StudentBiologist());
+				amountOfStudents = amountOfStudents - 1;
+				handler.notify();
+				try {
+					Thread.sleep(50);
+				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
 				}

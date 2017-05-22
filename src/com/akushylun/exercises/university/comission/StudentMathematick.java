@@ -1,38 +1,33 @@
 package com.akushylun.exercises.university.comission;
 
-public class StudentMathematick extends Student implements Runnable {
-	
-	private QueueToAdd handler;
-	
-	private volatile boolean flag = true;
-	
-	private int amountOfStudents = 250;
+public class StudentMathematick extends Student {
 	
 	public StudentMathematick() {
 	}
 	
-	public StudentMathematick(QueueToAdd handler) {
-		this.handler = handler;
-	}
-	
-	public boolean isNotEmptyList() {
-		if (amountOfStudents > 1) {
-			amountOfStudents = amountOfStudents - 1;
-			flag = true;
-		} else
-			flag = false;
-		return flag;
+	public StudentMathematick(QueueProduceConsume handler, int amountOfStudents) {
+		super(handler, amountOfStudents);
 	}
 	
 	@Override
 	public void run() {
-		while (isNotEmptyList() != false) {
-			System.out.println(isNotEmptyList());
-			synchronized (handler) {
+		synchronized (handler) {
+			System.out.println("student math CLASS");
+			while (amountOfStudents > 1) {
+				while (handler.getSize() > 25) {
+					try {
+						handler.wait();
+					}
+					catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println("mathematics studemt " + amountOfStudents);
+				handler.addStudent(new StudentMathematick());
+				amountOfStudents = amountOfStudents - 1;
+				handler.notify();
 				try {
-					System.out.println("math " + amountOfStudents);
-					handler.addStudent(new StudentMathematick());
-					handler.wait();
+					Thread.sleep(50);
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
@@ -40,5 +35,4 @@ public class StudentMathematick extends Student implements Runnable {
 			}
 		}
 	}
-	
 }
