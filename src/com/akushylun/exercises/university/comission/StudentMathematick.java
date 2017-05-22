@@ -13,7 +13,7 @@ public class StudentMathematick extends Student {
 	public void run() {
 		synchronized (handler) {
 			System.out.println("student math CLASS");
-			while (amountOfStudents > 1) {
+			while (amountOfStudents > 0) {
 				while (handler.getSize() > 25) {
 					try {
 						handler.wait();

@@ -14,15 +14,16 @@ public class QueueProduceConsume {
 	
 	public void removeStudent() {
 		synchronized (list) {
-			if (list.isEmpty()) {
-				return;
-			}
 			list.removeFirst();
 		}
 	}
 	
 	public Student getStudent() {
 		return list.getFirst();
+	}
+	
+	public boolean containsStudent(Student s) {
+		return list.contains(s);
 	}
 	
 	public int getSize() {

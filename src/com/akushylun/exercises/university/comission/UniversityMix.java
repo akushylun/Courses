@@ -13,9 +13,8 @@ public class UniversityMix extends University {
 		
 		synchronized (handler) {
 			int randomNum = MIN + (int) (Math.random() * ((MAX - MIN) + 1));
-			while ((student.amountOfStudents + studen2.amountOfStudents) > 0) {
-				while ((student.amountOfStudents + studen2.amountOfStudents) > 0 && handler.getSize() == 0
-				        || randomNum == 0) {
+			while (handler.containsStudent(student) || handler.containsStudent(studen2)) {
+				if (randomNum < 1) {
 					try {
 						handler.wait();
 					}
