@@ -3,35 +3,45 @@ package com.akushylun.exercises.regextask;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.akushylun.exercises.regextask.NicknameException.ErrorCode;
+
 public class Notebook {
-	
-	private List<Record> records;
-	
-	public Notebook() {
-		records = new ArrayList<>();
+
+    private List<Record> recordList;
+
+    public Notebook() {
+	this.recordList = new ArrayList<>();
+    }
+
+    public boolean addRecord(Record record) throws NicknameException {
+	boolean value = false;
+	if (nicknameIsUnique(record)) {
+	    recordList.add(record);
+	    value = true;
 	}
-	
-	public void addRecord(Record record) {
-		nicknameIsEmpty(record);
-		records.add(record);
+	return value;
+    }
+
+    /**
+     * Check that {@code newRecord} doesn't exist in {@code List<Record>}
+     * 
+     * @param newRecord
+     * @return {@code true} if {@code newRecord} doesn't exist in
+     *         {@code List<Record>} or {@code NicknameException}
+     * @throws NicknameException
+     */
+    private boolean nicknameIsUnique(Record newRecord) throws NicknameException {
+	for (Record record : recordList) {
+	    if (record.getNickname().equals(newRecord.getNickname())) {
+		throw new NicknameException(ErrorCode.INVALID_NICKNAME, newRecord.getNickname());
+	    }
 	}
-	
-	private boolean nicknameIsEmpty(Record comparedRecord) {
-		for (Record record : records) {
-			if (record.getNickname().equals(comparedRecord.getNickname())) {
-				throw new NicknameException("Please change your login!");
-			}
-		}
-		return true;
-	}
-	
-	public List<Record> getRecords() {
-		return records;
-	}
-	
-	@Override
-	public String toString() {
-		return "Notebook [records=" + records + "]";
-	}
-	
+	return true;
+    }
+
+    @Override
+    public String toString() {
+	return "Notebook [records=" + recordList + "]";
+    }
+
 }
